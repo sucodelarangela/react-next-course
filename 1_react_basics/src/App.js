@@ -5,20 +5,18 @@ import './App.css';
 
 class App extends Component {
   // declaring props in class components
-  constructor(props) {
-    super(props);
-    // binding the method to the component
-    this.handlePClick = this.handlePClick.bind(this);
-    this.state = {
-      name: 'Angela Caldas',
-      counter: 0
-    };
-  }
+  // remove binding and use arrow functions on method for cleaner code
+  // this.handlePClick = this.handlePClick.bind(this);
 
-  handlePClick() {
-    // to access 'this' inside the method we have to bind it in the constructor
+  // removing constructor and use public class states for cleaner code
+  state = {
+    name: 'Angela Caldas',
+    counter: 0
+  };
+
+  handlePClick = () => {
     this.setState({ name: 'Dev Júnior' });
-  }
+  };
 
   // we can use a method without 'bind' with arrow functions. Arrow functions don't have 'this'. So if we use 'this', the function will look for it in other parts of the component
   handleAClick = (event) => {
