@@ -1,3 +1,5 @@
+import './styles.css';
+
 // shorter syntax for components without any logics
 export const PostCard = ({ cover, title, body }) => (
   <div className="post">
