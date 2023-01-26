@@ -43,6 +43,15 @@ describe('<Button/>', () => {
 
     expect(button).toBeEnabled();
   });
+
+  it('should match snapshot', () => {
+    const fn = jest.fn();
+
+    const { container } = render(<Button text="Load more posts" disabled={false} clickAction={fn} />);
+
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).toMatchSnapshot();
+  });
 });
 
 // querySomething does not return an error it the element is not rendered on the screen
