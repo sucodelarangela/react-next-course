@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState, useEffect, useCallback } from 'react';
 
 import './styles.css';
@@ -16,12 +17,11 @@ export const Home = () => {
 
   const noMorePosts = page + postsPerPage >= allPosts.length;
 
-  const filteredPosts = !!searchValue ?
-    allPosts.filter(post => {
+  const filteredPosts = searchValue
+    ? allPosts.filter((post) => {
       return post.title.toLowerCase().includes(searchValue.toLowerCase());
     })
-    :
-    posts;
+    : posts;
 
   const handleLoadPosts = useCallback(async (page, postsPerPage) => {
     const postsAndPhotos = await loadPosts();
@@ -54,36 +54,23 @@ export const Home = () => {
   };
 
   return (
-    <section className='container'>
+    <section className="container">
       <div className="search-container">
         {/* '!!' converts to boolean */}
-        {!!searchValue && (
-          <h2>Search value: {searchValue}</h2>
-        )}
+        {!!searchValue && <h2>Search value: {searchValue}</h2>}
 
         <SearchInput searchValue={searchValue} handleChange={handleChange} />
       </div>
 
-      {filteredPosts.length > 0 && (
-        <Posts posts={filteredPosts} />
-      )}
+      {filteredPosts.length > 0 && <Posts posts={filteredPosts} />}
 
-      {filteredPosts.length === 0 && (
-        <p>Não existem posts.</p>
-      )}
+      {filteredPosts.length === 0 && <p>Não existem posts.</p>}
 
       <div className="button-container">
-        {!searchValue && (
-          <Button
-            text='Load more posts'
-            clickAction={loadMorePosts}
-            disabled={noMorePosts}
-          />
-        )}
+        {!searchValue && <Button text="Load more posts" clickAction={loadMorePosts} disabled={noMorePosts} />}
       </div>
     </section>
   );
-
 };
 
 // class Home2 extends Component {

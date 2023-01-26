@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 import { Button } from '.';
 
@@ -49,7 +49,6 @@ describe('<Button/>', () => {
 
     const { container } = render(<Button text="Load more posts" disabled={false} clickAction={fn} />);
 
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toMatchSnapshot();
   });
 });

@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
-import { PostCard } from ".";
-import { postCardPropsMock } from "./mock";
+import { PostCard } from '.';
+import { postCardPropsMock } from './mock';
 
 // mocking the props
 const props = postCardPropsMock;
@@ -13,14 +13,11 @@ describe('<PostCard/>', () => {
     // debug();
     render(<PostCard {...props} />);
 
-    expect(screen.getByRole('img', { name: /TITLE1/i }))
-      .toHaveAttribute('src', 'img/img.png');
+    expect(screen.getByRole('img', { name: /TITLE1/i })).toHaveAttribute('src', 'img/img.png');
 
-    expect(screen.getByRole('heading', { name: /TITLE1/i }))
-      .toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /TITLE1/i })).toBeInTheDocument();
 
-    expect(screen.getByText('body1'))
-      .toBeInTheDocument();
+    expect(screen.getByText('body1')).toBeInTheDocument();
   });
 
   it('should match snapshot', () => {
