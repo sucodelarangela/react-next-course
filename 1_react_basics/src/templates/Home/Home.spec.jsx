@@ -1,6 +1,8 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import Home from '.';
 
 // creating handlers to intercept requisitions from front end with mock-service-workers. In this case, the handler will intercept the real data from the url and return this mock data.
@@ -85,6 +87,42 @@ describe('<Home />', () => {
     expect(button).toBeInTheDocument();
 
     screen.debug();
+  });
+
+  it('should search for posts', async () => {
+    render(<Home />);
+
+    // noMorePosts is briefly rendered in the screen before data fetching finishes...
+    const noMorePosts = screen.getByText('Não existem posts.');
+
+    expect.assertions(9);
+
+    await waitForElementToBeRemoved(noMorePosts);
+
+    const search = screen.getByPlaceholderText(/type your search/i);
+
+    // user searches for 'title 1'
+    userEvent.type(search, 'title 1');
+
+    // getByRole expects to be rendered
+    expect(screen.getByRole('heading', { name: 'title 1' })).toBeInTheDocument();
+    // queryByRole returns null if object not rendered instead of error
+    expect(screen.queryByRole('heading', { name: 'title 2' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'title 3' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Search value: title 1' })).toBeInTheDocument();
+
+    // user clears the search input
+    userEvent.clear(search);
+
+    // now all headings must show
+    expect(screen.getByRole('heading', { name: 'title 1' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'title 2' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'title 3' })).toBeInTheDocument();
+
+    userEvent.type(search, 'bla bla');
+
+    expect(screen.getByText('Não existem posts.')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /bla bla/i })).toBeInTheDocument();
   });
 });
 
