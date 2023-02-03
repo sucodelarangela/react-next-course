@@ -70,8 +70,19 @@ describe('<Home />', () => {
     // noMorePosts is briefly rendered in the screen before data fetching finishes...
     const noMorePosts = screen.getByText('Não existem posts.');
 
+    expect.assertions(3);
+
     // ...using async methods to verify if noMorePosts disappears from the screen after fetching finishes. App must be running for fetch to work.
     await waitForElementToBeRemoved(noMorePosts);
+
+    const search = screen.getByPlaceholderText(/type your search/i);
+    expect(search).toBeInTheDocument();
+
+    const images = screen.getAllByRole('img');
+    expect(images).toHaveLength(3);
+
+    const button = screen.getByRole('button', { name: /load more posts/i });
+    expect(button).toBeInTheDocument();
 
     screen.debug();
   });
