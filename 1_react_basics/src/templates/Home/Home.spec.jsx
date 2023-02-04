@@ -124,6 +124,23 @@ describe('<Home />', () => {
     expect(screen.getByText('Não existem posts.')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /bla bla/i })).toBeInTheDocument();
   });
+
+  it('should load more posts', async () => {
+    render(<Home />);
+
+    const noMorePosts = screen.getByText('Não existem posts.');
+
+    // expect.assertions(3);
+
+    await waitForElementToBeRemoved(noMorePosts);
+
+    const button = screen.getByRole('button', { name: /load more posts/i });
+
+    userEvent.click(button);
+
+    expect(screen.getByRole('heading', { name: 'title 3' })).toBeInTheDocument();
+    expect(button).toBeDisabled();
+  });
 });
 
 // Usually we use 'spec' on test files for unit tests and 'test' for integration tests
